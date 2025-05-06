@@ -1,0 +1,41 @@
+<h2>POSTS</h2>
+<ul class="posts">
+  @for(post of posts; track post.id) {
+    <li>
+      @if (editingPostId !== post.id) {
+        <div class="card-content">
+          <span>Title: {{ post.title }}</span>
+          <span>id: {{ post.id }}</span>
+          <span>documentId: {{ post.documentId }}</span>
+        </div>
+        <div class="card-buttons">
+          <button class="card-button" (click)="editPost(post)">Modifier</button>
+          <button class="card-button" (click)="deletePost(post)">Supprimer</button>
+        </div>
+      }
+
+      @if (editingPostId === post.id) {
+        <div class="card-content">
+          <input [(ngModel)]="editedTitle" />
+        </div>
+        <div class="card-buttons">
+          <button class="card-button" (click)="savePost(post)">Enregistrer</button>
+          <button class="card-button" (click)="cancelEdit()">Annuler</button>
+        </div>
+      }
+    </li>
+  }
+</ul>
+
+<form #postForm="ngForm" (ngSubmit)="addPost()">
+  <input
+    type="text"
+    name="title"
+    [(ngModel)]="newPostTitle"
+    placeholder="Titre du nouveau post"
+    required
+  />
+  <button type="submit" [disabled]="!postForm.form.valid">Ajouter</button>
+</form>
+
+<p>list works!</p>
